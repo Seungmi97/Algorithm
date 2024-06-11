@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.ArrayList;
 
 class Solution {
     public int[] solution(int[] answers) {
@@ -15,54 +15,17 @@ class Solution {
             if (answers[i] == student3[i % student3.length]) score3++;
         }
 
-        int[] winner = new int[3];
-        if (score1 - score2 > 0) {
-            if (score1 - score3 > 0) {
-                winner[0] = 1;
-                winner = Arrays.copyOf(winner, 1);
-            }
-            if (score1 - score3 == 0) {
-                winner[0] = 1;
-                winner[1] = 3;
-                winner = Arrays.copyOf(winner, 2);
-            }
-            if (score1 - score3 < 0) {
-                winner[0] = 3;
-                winner = Arrays.copyOf(winner, 1);
-            }
+        ArrayList<Integer> winner = new ArrayList<>();
+        int maxScore = Math.max(Math.max(score1, score2), score3);
+        if (maxScore == score1) winner.add(1);
+        if (maxScore == score2) winner.add(2);
+        if (maxScore == score3) winner.add(3);
+        
+        int[] answer = new int[winner.size()];
+        for (int i = 0; i < answer.length; i++) {
+            answer[i] = winner.get(i);
         }
-        if (score1 - score2 == 0) {
-            if (score1 - score3 > 0) {
-                winner[0] = 1;
-                winner[1] = 2;
-                winner = Arrays.copyOf(winner, 2);
-            }
-            if (score1 - score3 == 0) {
-                winner[0] = 1;
-                winner[1] = 2;
-                winner[2] = 3;
-            }
-            if (score1 - score3 < 0) {
-                winner[0] = 3;
-                winner = Arrays.copyOf(winner, 1);
-            }
-        }
-        if (score1 - score2 < 0) {
-            if (score2 - score3 > 0) {
-                winner[0] = 2;
-                winner = Arrays.copyOf(winner, 1);
-            }
-            if (score2 - score3 == 0) {
-                winner[0] = 2;
-                winner[1] = 3;
-                winner = Arrays.copyOf(winner, 2);
-            }
-            if (score2 - score3 < 0) {
-                winner[0] = 3;
-                winner = Arrays.copyOf(winner, 1);
-            }
-        }
-
-        return winner;
+        
+        return answer;
     }
 }
